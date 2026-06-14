@@ -22,12 +22,12 @@ const servicios = {
     miniaturas: {
 
         imagenes: [
-            "assets/mini.png",
-            "assets/mini2.png",
-            "assets/mini3.png",
-            "assets/mini4.png",
-            "assets/mini5.png",
-            "assets/mini6.png"
+            "assets/miniaturas/bandejitamini.png",
+            "assets/miniaturas/juliiomini.png",
+            "assets/miniaturas/marcoplaysmini.png",
+            "assets/miniaturas/examplemini.png",
+            "assets/miniaturas/mini5.png",
+            "assets/miniaturas/mini6.png"
         ],
 
         texto: `
@@ -47,12 +47,12 @@ const servicios = {
     confirmaciones: {
 
         imagenes: [
-            "assets/confirm.png",
-            "assets/confirm2.png",
-            "assets/confirm3.png",
-            "assets/confirm4.png",
-            "assets/confirm5.png",
-            "assets/confirm6.png"
+            "assets/confirmaciones/confirmaciones otterstudio.png",
+            "assets/confirmaciones/confirmaciones otterstudio 2.png",
+            "assets/confirmaciones/confirmaciones otterstudio 3.png",
+            "assets/confirmaciones/confirmaciones otterstudio 4.png",
+            "assets/confirmaciones/confirmaciones otterstudio 5.png",
+            "assets/confirmaciones/confirmaciones otterstudio 6.png"
         ],
 
         texto: `
@@ -72,12 +72,12 @@ const servicios = {
     otros: {
 
         imagenes: [
-            "assets/otros.png",
-            "assets/otros2.png",
-            "assets/otros3.png",
-            "assets/otros4.png",
-            "assets/otros5.png",
-            "assets/otros6.png"
+            "assets/flyer/flyersociety virtual valley.png",
+            "assets/flyer/flyerisla de la traicion.png",
+            "assets/flyer/flyerl.a.t.d v1.png",
+            "assets/flyer/flyerl.a.t.d v2.png",
+            "assets/flyer/flyerl.a.t.d v3.png",
+            "assets/flyer/flyerotros6.png"
 
         ],
 
@@ -95,17 +95,21 @@ const servicios = {
     importante: {
 
         imagenes: [
-            "assets/import.png"
+            "assets/unnamed.png",
         ],
 
         texto: `
         <h2>Métodos de Pago</h2>
 
-        <p>PayPal y Ko-fi.</p>
+        <p>Solo acepto pagos a través de PayPal y Ko-fi..</p>
 
         <h2>Términos</h2>
 
-        <p>3 revisiones gratis. A partir de la cuarta: +3 USD.</p>
+        <p>✔ Me reservo el derecho de cancelar o rechazar cualquier proyecto con el que no me sienta cómodo trabajando..
+        <p>-</p>
+        <p>✔ Si un cliente solicita un render o skin de prueba, podrá pedir hasta 3 pruebas o revisiones sin costo adicional. A partir de la 4.ª prueba o revisión, se aplicará un cargo adicional de $3 USD. El contenido de prueba no podrá ser publicado bajo ninguna circunstancia.</p>
+        <p>-</p>
+        <p>✔ Me reservo el derecho de publicar mis trabajos de miniaturas y renders en mis redes sociales y en mi portafolio.</p>
         `
     }
 
@@ -146,3 +150,76 @@ window.addEventListener("DOMContentLoaded", () => {
     mostrarServicio("miniaturas");
 
 })
+
+// ================================
+// LIGHTBOX PARA RENDERS
+// ================================
+
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+const closeBtn = document.querySelector(".lightbox-close");
+
+function activarLightbox() {
+    document.querySelectorAll(".render-card img").forEach(img => {
+
+        img.addEventListener("click", () => {
+
+            lightbox.classList.add("active");
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt;
+
+        });
+
+    });
+}
+
+// Ejecutar cuando cargue la página
+window.addEventListener("load", activarLightbox);
+
+// Cerrar con la X
+closeBtn.addEventListener("click", () => {
+    lightbox.classList.remove("active");
+});
+
+// Cerrar al hacer clic en el fondo
+lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) {
+        lightbox.classList.remove("active");
+    }
+});
+
+// Cerrar con Escape
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        lightbox.classList.remove("active");
+    }
+});
+
+document.querySelectorAll(".nav a").forEach(link => {
+    link.addEventListener("click", function(e) {
+        e.preventDefault();
+
+        const destino = document.querySelector(this.getAttribute("href"));
+
+        if (destino) {
+            window.scrollTo({
+                top: destino.offsetTop - 80, // Ajusta por la navbar fija
+                behavior: "smooth"
+            });
+        }
+    });
+});
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+        }
+    });
+}, {
+    threshold: 0.15
+});
+
+document.querySelectorAll(".panel").forEach(panel => {
+    observer.observe(panel);
+});
